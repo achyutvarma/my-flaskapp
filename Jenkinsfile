@@ -31,8 +31,9 @@ pipeline {
 
     stage('Package') {
       steps {
-        sh 'zip -r myapp-${BUILD_NUMBER}.zip * -x .git* venv*'
-        archiveArtifacts artifacts: "myapp-${BUILD_NUMBER}.zip", fingerprint: true
+        sh '''
+          zip -r myapp-${BUILD_NUMBER}.zip . -x "venv/*" "__pycache__/*" "*.pyc"
+        '''
       }
     }
 
